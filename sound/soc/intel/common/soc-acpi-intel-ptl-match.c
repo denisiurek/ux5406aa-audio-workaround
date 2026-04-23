@@ -535,6 +535,7 @@ static const struct snd_soc_acpi_link_adr ptl_sdw_rt712_vb_l3_rt1320_l3[] = {
 	{}
 };
 
+
 /* ASUS Zenbook S14 UX5406AA */
 static const struct snd_soc_acpi_adr_device cs35l56_1_asus_adr[] = {
 	{
@@ -574,10 +575,10 @@ static const struct snd_soc_acpi_adr_device cs42l43_3_asus_adr[] = {
 		.name_prefix = "cs42l43"
 	},
 	{
-		.adr = 0x000330025d072201ull, /* Ghost 722 */
+		.adr = 0x000330025d072201ull, /* Ghost ALC722 */
 		.num_endpoints = 0,
 		.endpoints = NULL,
-		.name_prefix = ""
+		.name_prefix = "ghost"
 	}
 };
 
@@ -604,6 +605,13 @@ static const struct snd_soc_acpi_link_adr ptl_asus_ux5406aa_links[] = {
 /* this table is used when there is no I2S codec present */
 struct snd_soc_acpi_mach snd_soc_acpi_intel_ptl_sdw_machines[] = {
 /* Order Priority: mockup > most links > most bit link-mask > alphabetical */
+	{
+		.link_mask = BIT(1) | BIT(2) | BIT(3),
+		.links = ptl_asus_ux5406aa_links,
+		.drv_name = "sof_sdw",
+		.sof_tplg_filename = "sof-ptl-cs42l43-l3-cs35l56-l12.tplg",
+		.get_function_tplg_files = sof_sdw_get_tplg_files,
+	},
 	{
 		.link_mask = GENMASK(3, 0),
 		.links = sdw_mockup_headset_2amps_mic,
