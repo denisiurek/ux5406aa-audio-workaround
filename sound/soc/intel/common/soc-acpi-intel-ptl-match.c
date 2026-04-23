@@ -602,16 +602,6 @@ static const struct snd_soc_acpi_link_adr ptl_asus_ux5406aa_links[] = {
 };
 
 
-
-
-
-
-
-
-
-
-
-
 /* this table is used when there is no I2S codec present */
 struct snd_soc_acpi_mach snd_soc_acpi_intel_ptl_sdw_machines[] = {
 /* Order Priority: mockup > most links > most bit link-mask > alphabetical */
@@ -645,6 +635,12 @@ struct snd_soc_acpi_mach snd_soc_acpi_intel_ptl_sdw_machines[] = {
 		.links = sdw_mockup_multi_func,
 		.drv_name = "sof_sdw",
 		.sof_tplg_filename = "sof-ptl-rt722.tplg", /* Reuse the existing tplg file */
+	},
+	{
+		.link_mask = BIT(1) | BIT(2) | BIT(3),
+		.links = ptl_asus_ux5406aa_links,
+		.drv_name = "sof_sdw",
+		.sof_tplg_filename = "sof-ptl-cs42l43-l3-cs35l56-l12.tplg",
 	},
 	{
 		.link_mask = BIT(1) | BIT(2) | BIT(3),
