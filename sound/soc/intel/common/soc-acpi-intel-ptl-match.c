@@ -638,12 +638,6 @@ struct snd_soc_acpi_mach snd_soc_acpi_intel_ptl_sdw_machines[] = {
 	},
 	{
 		.link_mask = BIT(1) | BIT(2) | BIT(3),
-		.links = ptl_asus_ux5406aa_links,
-		.drv_name = "sof_sdw",
-		.sof_tplg_filename = "sof-ptl-cs42l43-l3-cs35l56-l12.tplg",
-	},
-	{
-		.link_mask = BIT(1) | BIT(2) | BIT(3),
 		.links = ptl_sdw_rt713_vb_l2_rt1320_l13,
 		.drv_name = "sof_sdw",
 		.machine_check = snd_soc_acpi_intel_sdca_is_device_rt712_vb,
