@@ -535,9 +535,93 @@ static const struct snd_soc_acpi_link_adr ptl_sdw_rt712_vb_l3_rt1320_l3[] = {
 	{}
 };
 
+
+/* ASUS Zenbook S14 UX5406AA */
+static const struct snd_soc_acpi_adr_device cs35l56_1_asus_adr[] = {
+	{
+		.adr = 0x00013201fa355601ull,
+		.num_endpoints = 1,
+		.endpoints = &spk_1_endpoint,
+		.name_prefix = "AMP1"
+	},
+	{
+		.adr = 0x00013301fa355601ull,
+		.num_endpoints = 1,
+		.endpoints = &spk_2_endpoint,
+		.name_prefix = "AMP2"
+	}
+};
+
+static const struct snd_soc_acpi_adr_device cs35l56_2_asus_adr[] = {
+	{
+		.adr = 0x00023001fa355601ull,
+		.num_endpoints = 1,
+		.endpoints = &spk_3_endpoint,
+		.name_prefix = "AMP3"
+	},
+	{
+		.adr = 0x00023101fa355601ull,
+		.num_endpoints = 1,
+		.endpoints = &spk_4_endpoint,
+		.name_prefix = "AMP4"
+	}
+};
+
+static const struct snd_soc_acpi_adr_device cs42l43_3_asus_adr[] = {
+	{
+		.adr = 0x00033001fa424301ull,
+		.num_endpoints = ARRAY_SIZE(cs42l43_amp_spkagg_endpoints),
+		.endpoints = cs42l43_amp_spkagg_endpoints,
+		.name_prefix = "cs42l43"
+	},
+	{
+		.adr = 0x000330025d072201ull, /* Ghost ALC722 */
+		.num_endpoints = 0,
+		.endpoints = NULL,
+		.name_prefix = "ghost"
+	}
+};
+
+static const struct snd_soc_acpi_link_adr ptl_asus_ux5406aa_links[] = {
+	{
+		.mask = BIT(3),
+		.num_adr = ARRAY_SIZE(cs42l43_3_asus_adr),
+		.adr_d = cs42l43_3_asus_adr,
+	},
+	{
+		.mask = BIT(1),
+		.num_adr = ARRAY_SIZE(cs35l56_1_asus_adr),
+		.adr_d = cs35l56_1_asus_adr,
+	},
+	{
+		.mask = BIT(2),
+		.num_adr = ARRAY_SIZE(cs35l56_2_asus_adr),
+		.adr_d = cs35l56_2_asus_adr,
+	},
+	{}
+};
+
+
+
+
+
+
+
+
+
+
+
+
 /* this table is used when there is no I2S codec present */
 struct snd_soc_acpi_mach snd_soc_acpi_intel_ptl_sdw_machines[] = {
 /* Order Priority: mockup > most links > most bit link-mask > alphabetical */
+	{
+		.link_mask = BIT(1) | BIT(2) | BIT(3),
+		.links = ptl_asus_ux5406aa_links,
+		.drv_name = "sof_sdw",
+		.sof_tplg_filename = "sof-ptl-cs42l43-l3-cs35l56-l12.tplg",
+		.get_function_tplg_files = sof_sdw_get_tplg_files,
+	},
 	{
 		.link_mask = GENMASK(3, 0),
 		.links = sdw_mockup_headset_2amps_mic,
